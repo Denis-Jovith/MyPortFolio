@@ -2,10 +2,13 @@ package com.example.denis_jovitus_buberwa_portifolio_app
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -16,7 +19,9 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ContactFormScreen(){
-    Column (modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column (modifier = Modifier.fillMaxSize()
+        .padding(16.dp)
+    ) {
         Text(text = "Contact Me", fontSize = 24.sp)
 
         Spacer(modifier = Modifier.height(16.dp))
