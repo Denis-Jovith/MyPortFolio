@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import java.nio.file.WatchEvent
 
 @Composable
-fun HomeScreen(){
+fun Homecreen(){
     Column (modifier = Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = R.drawable.profile_image),
