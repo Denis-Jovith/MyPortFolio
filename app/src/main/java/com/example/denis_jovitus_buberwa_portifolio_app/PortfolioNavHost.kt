@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.denis_jovitus_buberwa_portifolio_app.Homecreen
+import com.example.denis_jovitus_buberwa_portifolio_app.HomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +35,7 @@ fun PortfolioNavHost() {
                     modifier = Modifier.padding(padding)
                 ) {
                     composable("home") {
-                        Homecreen()  // Home Screen
+                        HomeScreen(navController = navController) // Home Screen
                     }
                     composable("projectDetail/{projectId}") { backStackEntry ->
                         val projectId = backStackEntry.arguments?.getString("projectId") ?: "Unknown"

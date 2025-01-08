@@ -40,6 +40,7 @@ fun GreetingPreview() {
     Denis_Jovitus_Buberwa_Portifolio_AppTheme {
 //        HomeScreen()
 //        ProjectDetailScreen
-        ContactFormScreen()
+//        ContactFormScreen()
+        ProjectViewModel()
     }
 }
