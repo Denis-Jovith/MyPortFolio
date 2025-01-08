@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Denis_Jovitus_Buberwa_Portifolio_App</string>
+    <string name="hello">Hello, I\'m Denis Jovith!</string>
+    <string name="welcome_message">Welcome to my Portfolio!</string>
 </resources>
