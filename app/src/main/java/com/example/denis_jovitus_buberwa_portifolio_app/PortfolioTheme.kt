@@ -32,7 +32,6 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 
-
 // Default Typography (can be customized later)
 private val AppTypography = Typography()
 
