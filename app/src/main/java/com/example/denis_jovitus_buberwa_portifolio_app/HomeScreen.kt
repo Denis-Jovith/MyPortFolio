@@ -38,7 +38,6 @@ fun HomeScreen(navController: NavHostController) {
             fontWeight = FontWeight.Bold
         )
 
-
         
         Text(
             text = "Welcome to my Portfolio!",
