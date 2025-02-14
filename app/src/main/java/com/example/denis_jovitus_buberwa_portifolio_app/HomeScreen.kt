@@ -39,8 +39,6 @@ fun HomeScreen(navController: NavHostController) {
         )
 
 
-
-
         
         Text(
             text = "Welcome to my Portfolio!",
