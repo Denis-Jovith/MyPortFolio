@@ -17,7 +17,6 @@ fun PortfolioNavHost() {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-
         color = MaterialTheme.colorScheme.background
     ) {
         Scaffold(
