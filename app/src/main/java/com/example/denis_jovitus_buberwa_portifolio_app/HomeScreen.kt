@@ -42,7 +42,6 @@ fun HomeScreen(navController: NavHostController) {
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
-
         Spacer(modifier = Modifier.height(32.dp))
 
         // Button to Navigate
