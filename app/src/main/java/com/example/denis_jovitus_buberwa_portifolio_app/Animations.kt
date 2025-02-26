@@ -29,7 +29,6 @@ fun FadeInAnimation() {
         isVisible = true
     }
 
-
     // Apply the alpha value to a composable
     Box(
         modifier = Modifier
