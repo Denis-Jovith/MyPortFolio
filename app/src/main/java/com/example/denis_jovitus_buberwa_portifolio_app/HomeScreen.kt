@@ -37,13 +37,14 @@ fun HomeScreen(navController: NavHostController) {
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
+        
         Text(
             text = "Welcome to my Portfolio!",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(32.dp))
-
+        
         // Button to Navigate
         Button(onClick = {
             navController.navigate("projectDetail/1") // Navigate to the Project Detail screen with a dummy projectId
