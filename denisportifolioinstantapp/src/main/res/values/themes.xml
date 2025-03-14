@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Denis_Jovitus_Buberwa_Portifolio_App" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
