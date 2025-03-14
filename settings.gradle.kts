@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Denis_Jovitus_Buberwa_Portifolio_App"
 include(":app")
- 
+include(":denisportifolioinstantapp")
