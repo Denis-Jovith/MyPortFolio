@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -25,12 +26,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.denis_jovitus_buberwa_portifolio_app.ui.theme.Denis_Jovitus_Buberwa_Portifolio_AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -159,7 +162,21 @@ fun ProjectSection(state: ScrollState) {
             color = Color.White
         )
 
-        // Add your project content here (Image, Description, etc.)
+        // Web Projects
+        ContentBodyProjectWeb(
+            constraint = myConstraintSet(), // Define your constraint set here
+            modifier = Modifier,
+            state = true,
+            state2 = state
+        )
+
+        // Mobile Projects
+        ContentBodyProjectMobile(
+            constraint = myConstraintSet(), // Define your constraint set here
+            modifier = Modifier,
+            state = true,
+            state1 = state
+        )
     }
 }
 
@@ -226,5 +243,106 @@ fun ContactSection(context: Context) {
         ) {
             Text(text = "Email", color = Color.White)
         }
+    }
+}
+
+@Composable
+private fun ContentBodyProjectWeb(
+    constraint: androidx.constraintlayout.compose.ConstraintSet,
+    modifier: Modifier,
+    state: Boolean,
+    state2: ScrollState
+) {
+    val wApps: MutableList<Int> = arrayListOf(
+        R.drawable.my_first_website_html,
+        R.drawable.class_attendance_java,
+        R.drawable.c_projects_c,
+        R.drawable.note_app_kmm,
+        R.drawable.tip_calculator_kotlin,
+        R.drawable.java_projects
+    )
+
+    ConstraintLayout(constraint) {
+        Box(
+            modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
+                .layoutId("contentBodyProjectWeb")
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                TitleText(text = "Web Project", modifier = Modifier.layoutId("contentBodyPWTitle"))
+
+                Row(modifier.horizontalScroll(state2)) {
+                    ImageProject(state = state, images = wApps)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ContentBodyProjectMobile(
+    constraint: androidx.constraintlayout.compose.ConstraintSet,
+    modifier: Modifier,
+    state: Boolean,
+    state1: ScrollState
+) {
+    val mApps: MutableList<Int> = arrayListOf(
+        R.drawable.tip_calculator_kotlin,
+        R.drawable.myportifolio_kotlin,
+        R.drawable.note_app_kmm,
+        R.drawable.commercial_ads_app_kotlin,
+        R.drawable.myportifolio_kotlin
+    )
+
+    ConstraintLayout(constraint) {
+        Box(
+            modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
+                .layoutId("contentBodyProjectMobile")
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                TitleText(text = "Mobile Project", modifier = Modifier.layoutId("contentBodyPMTitle"))
+                Row(modifier.horizontalScroll(state1)) {
+                    ImageProject(state = state, images = mApps)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TitleText(text: String, modifier: Modifier = Modifier) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.headlineMedium,
+        color = Color.White,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun ImageProject(state: Boolean, images: List<Int>, modifier: Modifier = Modifier) {
+    images.forEach { image ->
+        Image(
+            painter = painterResource(id = image),
+            contentDescription = "Project Image",
+            modifier = Modifier
+                .size(150.dp)
+                .padding(8.dp)
+        )
+    }
+}
+
+fun myConstraintSet(): androidx.constraintlayout.compose.ConstraintSet {
+    return androidx.constraintlayout.compose.ConstraintSet {
+        val contentBodyWeb = createGuidelineFromTop(0.2f)
+        val contentBodyMobile = createGuidelineFromTop(0.8f)
+        createGuidelineFromStart(0.5f)
     }
 }
