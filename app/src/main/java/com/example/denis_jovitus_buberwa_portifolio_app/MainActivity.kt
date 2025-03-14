@@ -228,12 +228,12 @@ private fun contentBodyProjectWeb(
     state: Boolean,
     state2: ScrollState) {
     val wApps: MutableList<Int> = arrayListOf(
-        R.drawable.apiquestion,
-        R.drawable.webgeneratepassword,
-        R.drawable.webloginexpress,
-        R.drawable.webplanetsearch,
-        R.drawable.webportifolio,
-        R.drawable.webrecipesapp
+        R.drawable.my_first_website_html,
+        R.drawable.class_attendance_java,
+        R.drawable.c_projects_c,
+        R.drawable.note_app_kmm,
+        R.drawable.tip_calculator_kotlin,
+        R.drawable.java_projects
     )
     ConstraintLayout(
         constraint
@@ -264,17 +264,17 @@ private fun contentBodyProjectWeb(
 @SuppressLint("UnusedCrossfadeTargetStateParameter")
 @Composable
 private fun contentBodyProjectMobile(
-    constraint: ConstraintSet,
+    constraint: androidx.constraintlayout.compose.ConstraintSet,
     modifier: Modifier,
     state: Boolean,
     state1: ScrollState
 ) {
     val mApps: MutableList<Int> = arrayListOf(
-        R.drawable.mobileconsultas,
-        R.drawable.desktoploginscreen,
-        R.drawable.mobilenoteapp,
-        R.drawable.mobileppt,
-        R.drawable.mobileportifolio
+        R.drawable.tip_calculator_kotlin,
+        R.drawable.myportifolio_kotlin,
+        R.drawable.note_app_kmm,
+        R.drawable.commercial_ads_app_kotlin,
+        R.drawable.myportifolio_kotlin
     )
     ConstraintLayout(
         constraint
