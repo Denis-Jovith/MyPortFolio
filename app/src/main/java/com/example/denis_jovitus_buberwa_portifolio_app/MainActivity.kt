@@ -67,7 +67,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.example.denis_jovitus_buberwa_portifolio_app.ui.theme.Denis_Jovitus_Buberwa_Portifolio_AppTheme
 
@@ -223,7 +222,7 @@ private fun ContentBody(constraint: ConstraintSet, modifier: Modifier) {
 
 @Composable
 private fun contentBodyProjectWeb(
-    constraint: ConstraintSet,
+    constraint: androidx.constraintlayout.compose.ConstraintSet,
     modifier: Modifier,
     state: Boolean,
     state2: ScrollState) {
@@ -428,7 +427,8 @@ private fun ImageButton(
     desc: String,
     btnName: String,
     onClick: () -> Unit,
-    constraint: ConstraintSet) {
+    constraint: androidx.constraintlayout.compose.ConstraintSet
+) {
     ConstraintLayout(
         constraint
     ) {
