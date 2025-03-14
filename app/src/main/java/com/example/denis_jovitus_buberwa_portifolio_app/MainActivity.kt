@@ -314,6 +314,7 @@ private fun ImageProject(state: Boolean, images: MutableList<Int>) {
                 .padding(20.dp)
         )
     }
+
 }
 
 @Composable
