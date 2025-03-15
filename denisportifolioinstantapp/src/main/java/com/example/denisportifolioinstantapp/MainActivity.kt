@@ -340,8 +340,8 @@ private fun ContentBodyBlenderProject(
     state4: ScrollState
 ) {
     val blenderImages: MutableList<Int> = arrayListOf(
-        R.drawable.pic3,
-        R.drawable.chaipic
+        R.drawable.chaipic,
+        R.drawable.pic3
     )
 
     ConstraintLayout(constraint) {
