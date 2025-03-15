@@ -122,6 +122,7 @@ fun MainScreen() {
     val state1 = rememberScrollState()
     val state2 = rememberScrollState()
     val state3 = rememberScrollState()
+    val state4 = rememberScrollState()
     LaunchedEffect(Unit) { state.animateScrollTo(100) }
     val constraint = myConstraintSet()
     val context = LocalContext.current
@@ -152,7 +153,14 @@ fun MainScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Content(
-                    constraint = constraint, modifier = Modifier, stateCross, state1, state2,state3)
+                    constraint = constraint,
+                    modifier = Modifier,
+                    stateCross,
+                    state1,
+                    state2,
+                    state3,
+                    state4
+                )
             }
             ContactBottom(constraint, context)
         }
@@ -167,13 +175,14 @@ private fun Content(
     state: Boolean,
     state1: ScrollState,
     state2: ScrollState,
-    state3: ScrollState
+    state3: ScrollState,
+    state4: ScrollState
 ) {
     Header(constraint, modifier)
     ContentBody(constraint, modifier)
     ContentBodyProjectWeb(constraint, modifier, state, state2)
     ContentBodyProjectMobile(constraint, modifier, state, state1)
-    ContentBodyBlenderProject(constraint, modifier, state3)
+    ContentBodyBlenderProject(constraint, modifier, state3, state4)
 }
 
 @Composable
@@ -258,7 +267,8 @@ private fun ContentBodyProjectWeb(
     constraint: ConstraintSet,
     modifier: Modifier,
     state: Boolean,
-    state2: ScrollState) {
+    state2: ScrollState
+) {
     val wApps: MutableList<Int> = arrayListOf(
         R.drawable.my_first_website_html,
         R.drawable.class_attendance_java,
@@ -267,10 +277,7 @@ private fun ContentBodyProjectWeb(
         R.drawable.tip_calculator_kotlin,
         R.drawable.java_projects
     )
-    ConstraintLayout(
-        constraint
-    ) {
-
+    ConstraintLayout(constraint) {
         Box(
             modifier
                 .fillMaxWidth()
@@ -280,7 +287,13 @@ private fun ContentBodyProjectWeb(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                TitleText(text = "Web Project", modifier = Modifier.layoutId("contentBodyPWTitle"))
+                // Add padding below the title
+                TitleText(
+                    text = "Web Project",
+                    modifier = Modifier
+                        .layoutId("contentBodyPWTitle")
+                        .padding(bottom = 16.dp) // Adjust the padding as needed
+                )
 
                 Row(
                     modifier.horizontalScroll(state2)
@@ -288,7 +301,6 @@ private fun ContentBodyProjectWeb(
                     ImageProject(state = state, images = wApps)
                 }
             }
-
         }
     }
 }
@@ -308,12 +320,9 @@ private fun ContentBodyProjectMobile(
         R.drawable.commercial_ads_app_kotlin,
         R.drawable.myportifolio_kotlin
     )
-    ConstraintLayout(
-        constraint
-    ) {
-
+    ConstraintLayout(constraint) {
         Box(
-            modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(intrinsicSize = IntrinsicSize.Min)
                 .layoutId("contentBodyProjectMobile")
@@ -321,12 +330,15 @@ private fun ContentBodyProjectMobile(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                // Add padding below the title
                 TitleText(
                     text = "Mobile Project",
-                    modifier = Modifier.layoutId("contentBodyPMTitle")
+                    modifier = Modifier
+                        .layoutId("contentBodyPMTitle")
+                        .padding(bottom = 16.dp) // Adjust the padding as needed
                 )
                 Row(
-                    modifier.horizontalScroll(state1)
+                    modifier = Modifier.horizontalScroll(state1)
                 ) {
                     ImageProject(state = state, images = mApps)
                 }
@@ -340,33 +352,30 @@ private fun ContentBodyProjectMobile(
 private fun ContentBodyBlenderProject(
     constraint: ConstraintSet,
     modifier: Modifier,
-    state3: ScrollState // Updated to state3
+    state3: ScrollState,
+    state4: ScrollState
 ) {
-    // List of image resources for Blender project
     val blenderImages: MutableList<Int> = arrayListOf(
-        R.drawable.pic3,  // Existing image
-        R.drawable.chaipic  // Newly added image
+        R.drawable.chaipic,
+        R.drawable.pic3
     )
 
-    // Create a constraint layout to hold the content
-    ConstraintLayout(
-        constraint
-    ) {
-        // Box to hold the whole content
+    ConstraintLayout(constraint) {
         Box(
             modifier = modifier
                 .fillMaxWidth()
                 .height(intrinsicSize = IntrinsicSize.Min)
                 .layoutId("contentBodyBlenderProject")
         ) {
-            // Column to arrange content vertically
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                // Title for the Blender project
+                // Add padding below the title
                 TitleText(
                     text = "Blender Project",
-                    modifier = Modifier.layoutId("contentBodyBlenderTitle")
+                    modifier = Modifier
+                        .layoutId("contentBodyBlenderTitle")
+                        .padding(bottom = 16.dp) // Adjust the padding as needed
                 )
 
                 // Display the video first (vertical)
@@ -375,18 +384,17 @@ private fun ContentBodyBlenderProject(
                 // Horizontal scrollable row for images
                 Row(
                     modifier = Modifier
-                        .horizontalScroll(state3) // Use state3 here
+                        .horizontalScroll(state3)
                         .padding(top = 16.dp) // Optional padding between video and images
                 ) {
-                    // Display the images
                     blenderImages.forEach { imageResource ->
-                        // Image display with padding and fixed size
                         Image(
                             painter = painterResource(id = imageResource),
                             contentDescription = "Blender Project Image",
                             modifier = Modifier
                                 .padding(8.dp)
-                                .size(200.dp)  // Adjust the size as needed
+                                .fillMaxWidth()
+                                .height(200.dp) // Adjust height as needed
                         )
                     }
                 }
@@ -470,6 +478,7 @@ fun VideoPlayerFromRaw() {
         }
     }
 }
+
 
 
 
@@ -723,6 +732,8 @@ fun GreetingPreview() {
         MainScreen()
     }
 }
+
+
 
 
 
