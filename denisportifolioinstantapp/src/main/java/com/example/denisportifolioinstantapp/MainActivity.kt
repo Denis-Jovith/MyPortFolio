@@ -78,6 +78,7 @@ import com.example.denis_jovitus_buberwa_portifolio_app.R
 import com.example.denisportifolioinstantapp.ui.theme.Denis_Jovitus_Buberwa_Portifolio_AppTheme
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 
 import com.google.android.exoplayer2.ui.StyledPlayerView
 
@@ -274,10 +275,10 @@ private fun ContentBodyProjectWeb(
             ) {
                 // Add padding below the title
                 TitleText(
-                    text = "Web Project",
+                    text = "Web Projects",
                     modifier = Modifier
                         .layoutId("contentBodyPWTitle")
-                        .padding(bottom = 16.dp) // Adjust the padding as needed
+                        .padding(bottom = 12.dp) // Adjust the padding as needed
                 )
 
                 Row(
@@ -317,10 +318,10 @@ private fun ContentBodyProjectMobile(
             ) {
                 // Add padding below the title
                 TitleText(
-                    text = "Mobile Project",
+                    text = "Mobile Projects",
                     modifier = Modifier
                         .layoutId("contentBodyPMTitle")
-                        .padding(bottom = 16.dp) // Adjust the padding as needed
+                        .padding(bottom = 12.dp) // Adjust the padding as needed
                 )
                 Row(
                     modifier = Modifier.horizontalScroll(state1)
@@ -357,10 +358,10 @@ private fun ContentBodyBlenderProject(
             ) {
                 // Add padding below the title
                 TitleText(
-                    text = "Blender Project",
+                    text = "Blender Projects",
                     modifier = Modifier
                         .layoutId("contentBodyBlenderTitle")
-                        .padding(bottom = 16.dp) // Adjust the padding as needed
+                        .padding(bottom = 20.dp) // Adjust the padding as needed
                 )
 
                 // Display the video first (vertical)
@@ -370,7 +371,7 @@ private fun ContentBodyBlenderProject(
                 Row(
                     modifier = Modifier
                         .horizontalScroll(state3)
-                        .padding(top = 16.dp) // Optional padding between video and images
+                        .padding(top = 20.dp) // Optional padding between video and images
                 ) {
                     blenderImages.forEach { imageResource ->
                         Image(
@@ -410,6 +411,9 @@ fun VideoPlayerFromRaw() {
     // Prepare the video source and add it to the player
     val mediaItem = MediaItem.fromUri(videoUri)
     exoPlayer.setMediaItem(mediaItem)
+
+    // Set the repeat mode to repeat the video
+    exoPlayer.repeatMode = Player.REPEAT_MODE_ALL
 
     // Initialize the player and prepare it
     LaunchedEffect(exoPlayer) {
