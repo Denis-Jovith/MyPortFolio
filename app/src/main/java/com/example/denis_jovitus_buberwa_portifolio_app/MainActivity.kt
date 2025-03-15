@@ -242,11 +242,11 @@ private fun ContentBody(constraint: ConstraintSet, modifier: Modifier) {
                                     color = Color(0xFFFFFFFF),
                                 )
                             ) {
-                                append("Hey, welcome! I am Denis Buberwa. As a Full-Stack Developer, I specialize in Android development using Kotlin and Jetpack Compose. " +
-                                        "I also work on web development with Kotlin, Ktor, and Kotlin Multiplatform.\n\n" +
-                                        "I have a strong interest in cybersecurity. I am passionate about cybersecurity, ethical hacking, and programming. " +
-                                        "I'm also interested in graphics design, particularly using Blender, and in mobile & web development.\n\n" +
-                                        "In my projects, I use various programming languages. I enjoy building Android apps with Kotlin, Ktor, and Kotlin Multiplatform Mobile (KMM) with Clean Architecture."
+                                append("I am a Full-Stack Developer, specializing in Android development using Kotlin and Jetpack Compose. "
+                                        + "I also work on web development with Kotlin, Ktor, and Kotlin Multiplatform.\n\n"
+                                        + "I have a strong interest in cybersecurity. I am passionate about cybersecurity, ethical hacking, and programming. "
+                                        + "I'm also interested in graphics design, particularly using Blender, and in mobile & web development.\n\n"
+                                        + "In my projects, I use various programming languages. I enjoy building Android apps with Kotlin, Ktor, and Kotlin Multiplatform Mobile (KMM) with Clean Architecture."
                                 )
 
 
