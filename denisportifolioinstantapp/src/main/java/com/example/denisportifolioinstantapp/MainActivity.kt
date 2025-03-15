@@ -29,12 +29,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.VolumeOff
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -75,7 +78,6 @@ import com.example.denis_jovitus_buberwa_portifolio_app.R
 import com.example.denisportifolioinstantapp.ui.theme.Denis_Jovitus_Buberwa_Portifolio_AppTheme
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
 
 import com.google.android.exoplayer2.ui.StyledPlayerView
 
@@ -249,7 +251,8 @@ private fun ContentBodyProjectWeb(
     constraint: ConstraintSet,
     modifier: Modifier,
     state: Boolean,
-    state2: ScrollState) {
+    state2: ScrollState
+) {
     val wApps: MutableList<Int> = arrayListOf(
         R.drawable.my_first_website_html,
         R.drawable.class_attendance_java,
@@ -258,10 +261,7 @@ private fun ContentBodyProjectWeb(
         R.drawable.tip_calculator_kotlin,
         R.drawable.java_projects
     )
-    ConstraintLayout(
-        constraint
-    ) {
-
+    ConstraintLayout(constraint) {
         Box(
             modifier
                 .fillMaxWidth()
@@ -271,7 +271,13 @@ private fun ContentBodyProjectWeb(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                TitleText(text = "Web Project", modifier = Modifier.layoutId("contentBodyPWTitle"))
+                // Add padding below the title
+                TitleText(
+                    text = "Web Project",
+                    modifier = Modifier
+                        .layoutId("contentBodyPWTitle")
+                        .padding(bottom = 16.dp) // Adjust the padding as needed
+                )
 
                 Row(
                     modifier.horizontalScroll(state2)
@@ -279,7 +285,6 @@ private fun ContentBodyProjectWeb(
                     ImageProject(state = state, images = wApps)
                 }
             }
-
         }
     }
 }
@@ -299,12 +304,9 @@ private fun ContentBodyProjectMobile(
         R.drawable.commercial_ads_app_kotlin,
         R.drawable.myportifolio_kotlin
     )
-    ConstraintLayout(
-        constraint
-    ) {
-
+    ConstraintLayout(constraint) {
         Box(
-            modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(intrinsicSize = IntrinsicSize.Min)
                 .layoutId("contentBodyProjectMobile")
@@ -312,12 +314,15 @@ private fun ContentBodyProjectMobile(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                // Add padding below the title
                 TitleText(
                     text = "Mobile Project",
-                    modifier = Modifier.layoutId("contentBodyPMTitle")
+                    modifier = Modifier
+                        .layoutId("contentBodyPMTitle")
+                        .padding(bottom = 16.dp) // Adjust the padding as needed
                 )
                 Row(
-                    modifier.horizontalScroll(state1)
+                    modifier = Modifier.horizontalScroll(state1)
                 ) {
                     ImageProject(state = state, images = mApps)
                 }
@@ -331,51 +336,51 @@ private fun ContentBodyProjectMobile(
 private fun ContentBodyBlenderProject(
     constraint: ConstraintSet,
     modifier: Modifier,
-    imageScrollState: ScrollState,
-    videoScrollState: ScrollState
-)
-{
-    val images = listOf(
-        R.drawable.chaipic,
+    state3: ScrollState,
+    state4: ScrollState
+) {
+    val blenderImages: MutableList<Int> = arrayListOf(
         R.drawable.pic3,
-
-    )
-
-    val videos = listOf(
-        R.raw.deniscarblender, // Replace with actual raw video files
-        R.raw.deniscarblenda
+        R.drawable.chaipic
     )
 
     ConstraintLayout(constraint) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            TitleText(text = "Mobile Project", modifier = Modifier.layoutId("contentBodyPMTitle"))
-
-            // Videos - Horizontal Scroll
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(videoScrollState)
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(intrinsicSize = IntrinsicSize.Min)
+                .layoutId("contentBodyBlenderProject")
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                videos.forEach { videoRes ->
-                    VideoPlayerFromRaw(videoRes)
-                }
-            }
+                // Add padding below the title
+                TitleText(
+                    text = "Blender Project",
+                    modifier = Modifier
+                        .layoutId("contentBodyBlenderTitle")
+                        .padding(bottom = 16.dp) // Adjust the padding as needed
+                )
 
-            // Images - Horizontal Scroll
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(imageScrollState)
-            ) {
-                images.forEach { imageRes ->
-                    Image(
-                        painter = painterResource(id = imageRes),
-                        contentDescription = "Project Image",
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth()
-                            .height(200.dp) // Adjust height as needed
-                    )
+                // Display the video first (vertical)
+                VideoPlayerFromRaw()
+
+                // Horizontal scrollable row for images
+                Row(
+                    modifier = Modifier
+                        .horizontalScroll(state3)
+                        .padding(top = 16.dp) // Optional padding between video and images
+                ) {
+                    blenderImages.forEach { imageResource ->
+                        Image(
+                            painter = painterResource(id = imageResource),
+                            contentDescription = "Blender Project Image",
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .fillMaxWidth()
+                                .height(200.dp) // Adjust height as needed
+                        )
+                    }
                 }
             }
         }
@@ -383,56 +388,80 @@ private fun ContentBodyBlenderProject(
 }
 
 @Composable
-fun VideoPlayerFromRaw(videoRes: Int) {
+fun VideoPlayerFromRaw() {
+    // Get the context to access raw resources
     val context = LocalContext.current
-    val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            val uri = Uri.parse("android.resource://${context.packageName}/raw/deniscarblenda")
-            setMediaItem(MediaItem.fromUri(uri))
-            repeatMode = Player.REPEAT_MODE_ONE // Loop the video
-            prepare()
-            play()
+
+    // Create an ExoPlayer instance
+    val exoPlayer = ExoPlayer.Builder(context).build()
+
+    // State to track whether the sound is muted or not
+    var isMuted by remember { mutableStateOf(true) }
+
+    // Mute the player by default
+    LaunchedEffect(exoPlayer) {
+        exoPlayer.volume = if (isMuted) 0f else 1f
+    }
+
+    // Get the Uri for the video from the raw folder
+    val videoUri = Uri.parse("android.resource://${context.packageName}/raw/deniscarblender")
+
+    // Prepare the video source and add it to the player
+    val mediaItem = MediaItem.fromUri(videoUri)
+    exoPlayer.setMediaItem(mediaItem)
+
+    // Initialize the player and prepare it
+    LaunchedEffect(exoPlayer) {
+        exoPlayer.prepare()
+        exoPlayer.play()
+    }
+
+    // Release the player when the composable is disposed
+    DisposableEffect(exoPlayer) {
+        onDispose {
+            exoPlayer.release()
         }
     }
 
-    var volume by remember { mutableStateOf(0.5f) } // Start with medium volume
-
-    DisposableEffect(Unit) {
-        onDispose { exoPlayer.release() }
-    }
-
+    // Create a Box to hold the video player view and the sound toggle button
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(250.dp) // Increased height to give space for controls
     ) {
+        // Use AndroidView to embed the ExoPlayer view in the Compose layout
         AndroidView(
-            factory = { StyledPlayerView(it).apply { player = exoPlayer } },
+            factory = {
+                // Create and configure the StyledPlayerView to display the video
+                val playerView = StyledPlayerView(it)
+                playerView.player = exoPlayer
+                playerView.useController = true  // Enable default controls (play/pause, etc.)
+                playerView
+            },
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Volume Control Slider
-        Column(
+        // Sound toggle button
+        IconButton(
+            onClick = {
+                // Toggle the mute state
+                isMuted = !isMuted
+                // Update the player's volume
+                exoPlayer.volume = if (isMuted) 0f else 1f
+            },
             modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(8.dp)
-                .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(8.dp))
-                .padding(8.dp)
+                .align(Alignment.TopEnd) // Position the button at the top-right corner
+                .padding(8.dp) // Add some padding
         ) {
-            Text(text = "Volume", color = Color.White, fontSize = 12.sp)
-            Slider(
-                value = volume,
-                onValueChange = {
-                    volume = it
-                    exoPlayer.volume = it
-                },
-                valueRange = 0f..1f,
-                colors = SliderDefaults.colors(thumbColor = Color.White)
+            // Display a volume icon based on the mute state
+            Icon(
+                imageVector = if (isMuted) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
+                contentDescription = if (isMuted) "Unmute" else "Mute",
+                tint = Color.White // Set the icon color to white for visibility
             )
         }
     }
 }
-
 
 
 
