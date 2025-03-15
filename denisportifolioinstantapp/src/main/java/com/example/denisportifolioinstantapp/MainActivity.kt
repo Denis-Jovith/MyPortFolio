@@ -29,17 +29,25 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.VolumeOff
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,7 +60,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -64,10 +71,14 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.example.denis_jovitus_buberwa_portifolio_app.R
 import com.example.denisportifolioinstantapp.ui.theme.Denis_Jovitus_Buberwa_Portifolio_AppTheme
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.ui.StyledPlayerView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,12 +104,13 @@ fun MainScreen() {
     val state = rememberScrollState()
     val state1 = rememberScrollState()
     val state2 = rememberScrollState()
-    LaunchedEffect(Unit) { state.animateScrollTo(100)}
+    val state3 = rememberScrollState()
+    LaunchedEffect(Unit) { state.animateScrollTo(100) }
     val constraint = myConstraintSet()
     val context = LocalContext.current
     val displayMetrics = context.resources.displayMetrics
 
-    //Height Of Screen
+    // Height Of Screen
     val height = LocalConfiguration.current.screenHeightDp.dp - 80.dp
 
     ConstraintLayout(
@@ -122,12 +134,14 @@ fun MainScreen() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Content(constraint = constraint, modifier = Modifier, stateCross, state1, state2)
+                Content(
+                    constraint = constraint, modifier = Modifier, stateCross, state1, state2,state3)
             }
             ContactBottom(constraint, context)
         }
     }
 }
+
 
 @Composable
 private fun Content(
@@ -135,12 +149,14 @@ private fun Content(
     modifier: Modifier,
     state: Boolean,
     state1: ScrollState,
-    state2: ScrollState
+    state2: ScrollState,
+    state3: ScrollState
 ) {
     Header(constraint, modifier)
     ContentBody(constraint, modifier)
     ContentBodyProjectWeb(constraint, modifier, state, state2)
     ContentBodyProjectMobile(constraint, modifier, state, state1)
+    ContentBodyBlenderProject(constraint, modifier, state3)
 }
 
 @Composable
@@ -166,7 +182,6 @@ private fun Header(constraint: ConstraintSet, modifier: Modifier) {
     }
 }
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
 private fun ContentBody(constraint: ConstraintSet, modifier: Modifier) {
     ConstraintLayout(
@@ -196,17 +211,17 @@ private fun ContentBody(constraint: ConstraintSet, modifier: Modifier) {
                                 style = SpanStyle(
                                     fontWeight = FontWeight.SemiBold,
                                     fontSize = 20.sp,
-                                    color = Color(0xFFFFFFFF ),
+                                    color = Color(0xFFFFFFFF),
                                 )
                             ) {
-                                append("Hey, welcome! My name is Denis Buberwa, and I am a final-year Computer Science student.\n" +
-                                        "I have a deep passion for cybersecurity, ethical hacking, and programming. " +
-                                        "I'm also interested in graphics design (Blender) and mobile & web development.\n\n" +
-                                        "As a Full-Stack Developer, I specialize in Android development using Kotlin and Jetpack Compose, " +
-                                        "and web development with Kotlin, Ktor, and Kotlin Multiplatform. " +
-                                        "I also have a strong interest in cybersecurity.\n\n" +
-                                        "In my projects, I use different programming languages, and I love building Android apps with Kotlin. " +
-                                        "Currently, I'm working on a Note App using Kotlin Multiplatform Mobile (KMM) with Clean Architecture.")
+                                append("Hey, welcome! I am Denis Buberwa. As a Full-Stack Developer, I specialize in Android development using Kotlin and Jetpack Compose. " +
+                                        "I also work on web development with Kotlin, Ktor, and Kotlin Multiplatform.\n\n" +
+                                        "I have a strong interest in cybersecurity. I am passionate about cybersecurity, ethical hacking, and programming. " +
+                                        "I'm also interested in graphics design, particularly using Blender, and in mobile & web development.\n\n" +
+                                        "In my projects, I use various programming languages. I enjoy building Android apps with Kotlin, Ktor, and Kotlin Multiplatform Mobile (KMM) with Clean Architecture."
+                                )
+
+
 
                             }
                         }
@@ -261,10 +276,10 @@ private fun ContentBodyProjectWeb(
     }
 }
 
-@SuppressLint("UnusedCrossfadeTargetStateParameter")
+@SuppressLint("UnusedCrossroadTargetStateParameter")
 @Composable
 private fun ContentBodyProjectMobile(
-    constraint: androidx.constraintlayout.compose.ConstraintSet,
+    constraint: ConstraintSet,
     modifier: Modifier,
     state: Boolean,
     state1: ScrollState
@@ -303,6 +318,144 @@ private fun ContentBodyProjectMobile(
     }
 }
 
+@SuppressLint("UnusedCrossfadeTargetStateParameter")
+@Composable
+private fun ContentBodyBlenderProject(
+    constraint: ConstraintSet,
+    modifier: Modifier,
+    state3: ScrollState // Updated to state3
+) {
+    // List of image resources for Blender project
+    val blenderImages: MutableList<Int> = arrayListOf(
+        R.drawable.pic3,  // Existing image
+        R.drawable.chaipic  // Newly added image
+    )
+
+    // Create a constraint layout to hold the content
+    ConstraintLayout(
+        constraint
+    ) {
+        // Box to hold the whole content
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(intrinsicSize = IntrinsicSize.Min)
+                .layoutId("contentBodyBlenderProject")
+        ) {
+            // Column to arrange content vertically
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                // Title for the Blender project
+                TitleText(
+                    text = "Blender Project",
+                    modifier = Modifier.layoutId("contentBodyBlenderTitle")
+                )
+
+                // Display the video first (vertical)
+                VideoPlayerFromRaw()
+
+                // Horizontal scrollable row for images
+                Row(
+                    modifier = Modifier
+                        .horizontalScroll(state3) // Use state3 here
+                        .padding(top = 16.dp) // Optional padding between video and images
+                ) {
+                    // Display the images
+                    blenderImages.forEach { imageResource ->
+                        // Image display with padding and fixed size
+                        Image(
+                            painter = painterResource(id = imageResource),
+                            contentDescription = "Blender Project Image",
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .size(200.dp)  // Adjust the size as needed
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun VideoPlayerFromRaw() {
+    // Get the context to access raw resources
+    val context = LocalContext.current
+
+    // Create an ExoPlayer instance
+    val exoPlayer = ExoPlayer.Builder(context).build()
+
+    // State to track whether the sound is muted or not
+    var isMuted by remember { mutableStateOf(true) }
+
+    // Mute the player by default
+    LaunchedEffect(exoPlayer) {
+        exoPlayer.volume = if (isMuted) 0f else 1f
+    }
+
+    // Get the Uri for the video from the raw folder
+    val videoUri = Uri.parse("android.resource://${context.packageName}/raw/deniscarblender")
+
+    // Prepare the video source and add it to the player
+    val mediaItem = MediaItem.fromUri(videoUri)
+    exoPlayer.setMediaItem(mediaItem)
+
+    // Initialize the player and prepare it
+    LaunchedEffect(exoPlayer) {
+        exoPlayer.prepare()
+        exoPlayer.play()
+    }
+
+    // Release the player when the composable is disposed
+    DisposableEffect(exoPlayer) {
+        onDispose {
+            exoPlayer.release()
+        }
+    }
+
+    // Create a Box to hold the video player view and the sound toggle button
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(250.dp) // Increased height to give space for controls
+    ) {
+        // Use AndroidView to embed the ExoPlayer view in the Compose layout
+        AndroidView(
+            factory = {
+                // Create and configure the StyledPlayerView to display the video
+                val playerView = StyledPlayerView(it)
+                playerView.player = exoPlayer
+                playerView.useController = true  // Enable default controls (play/pause, etc.)
+                playerView
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        // Sound toggle button
+        IconButton(
+            onClick = {
+                // Toggle the mute state
+                isMuted = !isMuted
+                // Update the player's volume
+                exoPlayer.volume = if (isMuted) 0f else 1f
+            },
+            modifier = Modifier
+                .align(Alignment.TopEnd) // Position the button at the top-right corner
+                .padding(8.dp) // Add some padding
+        ) {
+            // Display a volume icon based on the mute state
+            Icon(
+                imageVector = if (isMuted) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
+                contentDescription = if (isMuted) "Unmute" else "Mute",
+                tint = Color.White // Set the icon color to white for visibility
+            )
+        }
+    }
+}
+
+
+
 @Composable
 private fun ImageProject(state: Boolean, images: MutableList<Int>) {
     for (i in images) {
@@ -325,7 +478,7 @@ private fun TitleText(text: String, modifier: Modifier) {
                 style = SpanStyle(
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp,
-                    color = Color(0xFFFFFFFF ),
+                    color = Color(0xFFFFFFFF),
                 )
             ) {
                 append(text)
@@ -362,6 +515,7 @@ private fun ContactBottom(constraint: ConstraintSet, context: Context) {
             }
         )
     }
+
 
     ConstraintLayout(
         constraint,
@@ -422,13 +576,16 @@ private fun ContactBottom(constraint: ConstraintSet, context: Context) {
     }
 }
 
+
+
+
 @Composable
 private fun ImageButton(
     id: Int,
     desc: String,
     btnName: String,
     onClick: () -> Unit,
-    constraint: androidx.constraintlayout.compose.ConstraintSet
+    constraint: ConstraintSet
 ) {
     ConstraintLayout(
         constraint
@@ -463,7 +620,7 @@ private fun ImageButton(
     }
 }
 
-private fun myConstraintSet(): androidx.constraintlayout.compose.ConstraintSet {
+private fun myConstraintSet(): ConstraintSet {
     return ConstraintSet {
         val imagePerfil = createRefFor("imagePerfil")
         val titleText = createRefFor("titleText")
