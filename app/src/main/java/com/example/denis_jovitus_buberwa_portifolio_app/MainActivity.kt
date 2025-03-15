@@ -180,7 +180,7 @@ private fun Header(constraint: ConstraintSet, modifier: Modifier) {
                 .layoutId("imagePerfil")
         )
 
-        TitleText(text = "Denis Jovitus Buberwa.", modifier.layoutId("titleText"))
+        TitleText(text = "Denis Jovitus Buberwa", modifier.layoutId("titleText"))
     }
 }
 
@@ -214,7 +214,7 @@ private fun ContentBody(constraint: ConstraintSet, modifier: Modifier) {
                                 style = SpanStyle(
                                     fontWeight = FontWeight.SemiBold,
                                     fontSize = 20.sp,
-                                    color = Color(0xFFa5bac2),
+                                    color = Color(0xFFFFFFFF),
                                 )
                             ) {
                                 append("Hey, welcome! My name is Denis Buberwa, and I am a final-year Computer Science student.\n" +
@@ -345,7 +345,7 @@ private fun TitleText(text: String, modifier: Modifier) {
                 style = SpanStyle(
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp,
-                    color = Color(0xFFa5bac2),
+                    color = Color(0xFFFFFFFF),
                 )
             ) {
                 append(text)
@@ -383,6 +383,7 @@ private fun ContactBottom(constraint: ConstraintSet, context: Context) {
         )
     }
 
+
     ConstraintLayout(
         constraint,
     ) {
@@ -394,7 +395,7 @@ private fun ContactBottom(constraint: ConstraintSet, context: Context) {
                     .fillMaxWidth()
                     .height(80.dp)
                     .border(
-                        border = BorderStroke(2.dp, Color.Black),
+                        border = BorderStroke(2.dp, Color(0xFF6B8E23)),
                         shape = RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp)
                     ),
                 horizontalArrangement = Arrangement.Center,
@@ -409,7 +410,7 @@ private fun ContactBottom(constraint: ConstraintSet, context: Context) {
                 )
 
                 Divider(
-                    color = Color.Black,
+                    color = Color(0xFF6B8E23), // Olive Green
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(2.dp)
@@ -424,7 +425,7 @@ private fun ContactBottom(constraint: ConstraintSet, context: Context) {
                 )
 
                 Divider(
-                    color = Color.Black,
+                    color = Color(0xFF6B8E23), // Olive Green
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(2.dp)
@@ -459,7 +460,7 @@ private fun ImageButton(
                 .padding(horizontal = 14.dp)
                 .layoutId("contentButonContact"),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
+                containerColor = Color(0xFF4FA8A8), // Teal Blue
                 contentColor = Color.Transparent
             ),
         ) {
@@ -476,7 +477,7 @@ private fun ImageButton(
                     text = btnName,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.Cyan
+                    color = Color(0xFFF1E7D0) // Soft Cream
                 )
             }
         }
@@ -569,6 +570,7 @@ fun GreetingPreview() {
         MainScreen()
     }
 }
+
 
 
 
