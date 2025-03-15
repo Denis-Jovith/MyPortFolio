@@ -29,15 +29,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.VolumeOff
-import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -78,6 +75,8 @@ import com.example.denis_jovitus_buberwa_portifolio_app.R
 import com.example.denisportifolioinstantapp.ui.theme.Denis_Jovitus_Buberwa_Portifolio_AppTheme
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
+
 import com.google.android.exoplayer2.ui.StyledPlayerView
 
 class MainActivity : ComponentActivity() {
@@ -105,6 +104,7 @@ fun MainScreen() {
     val state1 = rememberScrollState()
     val state2 = rememberScrollState()
     val state3 = rememberScrollState()
+    val state4 = rememberScrollState()
     LaunchedEffect(Unit) { state.animateScrollTo(100) }
     val constraint = myConstraintSet()
     val context = LocalContext.current
@@ -135,7 +135,14 @@ fun MainScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Content(
-                    constraint = constraint, modifier = Modifier, stateCross, state1, state2,state3)
+                    constraint = constraint,
+                    modifier = Modifier,
+                    stateCross,
+                    state1,
+                    state2,
+                    state3,
+                    state4
+                )
             }
             ContactBottom(constraint, context)
         }
@@ -150,13 +157,14 @@ private fun Content(
     state: Boolean,
     state1: ScrollState,
     state2: ScrollState,
-    state3: ScrollState
+    state3: ScrollState,
+    state4: ScrollState
 ) {
     Header(constraint, modifier)
     ContentBody(constraint, modifier)
     ContentBodyProjectWeb(constraint, modifier, state, state2)
     ContentBodyProjectMobile(constraint, modifier, state, state1)
-    ContentBodyBlenderProject(constraint, modifier, state3)
+    ContentBodyBlenderProject(constraint, modifier, state3, state4)
 }
 
 @Composable
@@ -323,55 +331,51 @@ private fun ContentBodyProjectMobile(
 private fun ContentBodyBlenderProject(
     constraint: ConstraintSet,
     modifier: Modifier,
-    state3: ScrollState // Updated to state3
-) {
-    // List of image resources for Blender project
-    val blenderImages: MutableList<Int> = arrayListOf(
-        R.drawable.pic3,  // Existing image
-        R.drawable.chaipic  // Newly added image
+    imageScrollState: ScrollState,
+    videoScrollState: ScrollState
+)
+{
+    val images = listOf(
+        R.drawable.chaipic,
+        R.drawable.pic3,
+
     )
 
-    // Create a constraint layout to hold the content
-    ConstraintLayout(
-        constraint
-    ) {
-        // Box to hold the whole content
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(intrinsicSize = IntrinsicSize.Min)
-                .layoutId("contentBodyBlenderProject")
-        ) {
-            // Column to arrange content vertically
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+    val videos = listOf(
+        R.raw.deniscarblender, // Replace with actual raw video files
+        R.raw.deniscarblenda
+    )
+
+    ConstraintLayout(constraint) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            TitleText(text = "Mobile Project", modifier = Modifier.layoutId("contentBodyPMTitle"))
+
+            // Videos - Horizontal Scroll
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(videoScrollState)
             ) {
-                // Title for the Blender project
-                TitleText(
-                    text = "Blender Project",
-                    modifier = Modifier.layoutId("contentBodyBlenderTitle")
-                )
+                videos.forEach { videoRes ->
+                    VideoPlayerFromRaw(videoRes)
+                }
+            }
 
-                // Display the video first (vertical)
-                VideoPlayerFromRaw()
-
-                // Horizontal scrollable row for images
-                Row(
-                    modifier = Modifier
-                        .horizontalScroll(state3) // Use state3 here
-                        .padding(top = 16.dp) // Optional padding between video and images
-                ) {
-                    // Display the images
-                    blenderImages.forEach { imageResource ->
-                        // Image display with padding and fixed size
-                        Image(
-                            painter = painterResource(id = imageResource),
-                            contentDescription = "Blender Project Image",
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(200.dp)  // Adjust the size as needed
-                        )
-                    }
+            // Images - Horizontal Scroll
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(imageScrollState)
+            ) {
+                images.forEach { imageRes ->
+                    Image(
+                        painter = painterResource(id = imageRes),
+                        contentDescription = "Project Image",
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .fillMaxWidth()
+                            .height(200.dp) // Adjust height as needed
+                    )
                 }
             }
         }
@@ -379,80 +383,57 @@ private fun ContentBodyBlenderProject(
 }
 
 @Composable
-fun VideoPlayerFromRaw() {
-    // Get the context to access raw resources
+fun VideoPlayerFromRaw(videoRes: Int) {
     val context = LocalContext.current
-
-    // Create an ExoPlayer instance
-    val exoPlayer = ExoPlayer.Builder(context).build()
-
-    // State to track whether the sound is muted or not
-    var isMuted by remember { mutableStateOf(true) }
-
-    // Mute the player by default
-    LaunchedEffect(exoPlayer) {
-        exoPlayer.volume = if (isMuted) 0f else 1f
-    }
-
-    // Get the Uri for the video from the raw folder
-    val videoUri = Uri.parse("android.resource://${context.packageName}/raw/deniscarblender")
-
-    // Prepare the video source and add it to the player
-    val mediaItem = MediaItem.fromUri(videoUri)
-    exoPlayer.setMediaItem(mediaItem)
-
-    // Initialize the player and prepare it
-    LaunchedEffect(exoPlayer) {
-        exoPlayer.prepare()
-        exoPlayer.play()
-    }
-
-    // Release the player when the composable is disposed
-    DisposableEffect(exoPlayer) {
-        onDispose {
-            exoPlayer.release()
+    val exoPlayer = remember {
+        ExoPlayer.Builder(context).build().apply {
+            val uri = Uri.parse("android.resource://${context.packageName}/raw/deniscarblenda")
+            setMediaItem(MediaItem.fromUri(uri))
+            repeatMode = Player.REPEAT_MODE_ONE // Loop the video
+            prepare()
+            play()
         }
     }
 
-    // Create a Box to hold the video player view and the sound toggle button
+    var volume by remember { mutableStateOf(0.5f) } // Start with medium volume
+
+    DisposableEffect(Unit) {
+        onDispose { exoPlayer.release() }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp) // Increased height to give space for controls
+            .height(250.dp)
     ) {
-        // Use AndroidView to embed the ExoPlayer view in the Compose layout
         AndroidView(
-            factory = {
-                // Create and configure the StyledPlayerView to display the video
-                val playerView = StyledPlayerView(it)
-                playerView.player = exoPlayer
-                playerView.useController = true  // Enable default controls (play/pause, etc.)
-                playerView
-            },
+            factory = { StyledPlayerView(it).apply { player = exoPlayer } },
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Sound toggle button
-        IconButton(
-            onClick = {
-                // Toggle the mute state
-                isMuted = !isMuted
-                // Update the player's volume
-                exoPlayer.volume = if (isMuted) 0f else 1f
-            },
+        // Volume Control Slider
+        Column(
             modifier = Modifier
-                .align(Alignment.TopEnd) // Position the button at the top-right corner
-                .padding(8.dp) // Add some padding
+                .align(Alignment.BottomStart)
+                .padding(8.dp)
+                .background(Color.Black.copy(alpha = 0.6f), RoundedCornerShape(8.dp))
+                .padding(8.dp)
         ) {
-            // Display a volume icon based on the mute state
-            Icon(
-                imageVector = if (isMuted) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
-                contentDescription = if (isMuted) "Unmute" else "Mute",
-                tint = Color.White // Set the icon color to white for visibility
+            Text(text = "Volume", color = Color.White, fontSize = 12.sp)
+            Slider(
+                value = volume,
+                onValueChange = {
+                    volume = it
+                    exoPlayer.volume = it
+                },
+                valueRange = 0f..1f,
+                colors = SliderDefaults.colors(thumbColor = Color.White)
             )
         }
     }
 }
+
+
 
 
 
