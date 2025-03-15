@@ -41,7 +41,7 @@ android {
 
 dependencies {
     implementation ("androidx.navigation:navigation-compose:2.7.2")
-
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.1-alpha")
 
 
 
