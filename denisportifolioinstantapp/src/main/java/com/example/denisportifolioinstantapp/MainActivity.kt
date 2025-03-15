@@ -164,9 +164,10 @@ private fun Content(
 ) {
     Header(constraint, modifier)
     ContentBody(constraint, modifier)
-    ContentBodyProjectWeb(constraint, modifier, state, state2)
     ContentBodyProjectMobile(constraint, modifier, state, state1)
     ContentBodyBlenderProject(constraint, modifier, state3, state4)
+    ContentBodyProjectWeb(constraint, modifier, state, state2)
+
 }
 
 @Composable
