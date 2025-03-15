@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The main image -->
+    <item android:drawable="@drawable/desenho" /> <!-- Replace with your actual image resource -->
+
+    <!-- Apply a semi-transparent overlay to reduce the brightness -->
+    <item>
+        <shape>
+            <solid android:color="#88000000" /> <!-- Semi-transparent black overlay to reduce brightness -->
+        </shape>
+    </item>
+</layer-list>
