@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "build/outputs/apk/debug",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
