@@ -41,6 +41,34 @@ android {
 
 dependencies {
     implementation ("androidx.navigation:navigation-compose:2.7.2")
+    implementation ("com.google.android.exoplayer:exoplayer:2.18.1")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.1-alpha")
+
+    // Jetpack Compose dependencies
+    implementation("androidx.compose.ui:ui:1.0.5")
+    implementation("androidx.compose.material3:material3:1.0.0")
+    implementation("androidx.compose.ui:ui-tooling:1.0.5")
+    implementation("androidx.compose.foundation:foundation:1.0.5")
+    implementation("androidx.compose.runtime:runtime:1.0.5")
+
+    // ExoPlayer dependency
+    implementation("com.google.android.exoplayer:exoplayer:2.15.1")
+
+    implementation("androidx.media3:media3-ui:1.5.1")
+
+    // Compose dependencies
+    implementation("androidx.compose.ui:ui:1.6.0")
+    implementation("androidx.compose.material3:material3:1.1.2")
+    implementation("androidx.compose.foundation:foundation:1.6.0")
+    implementation("androidx.compose.runtime:runtime:1.6.0")
+    implementation("androidx.compose.material:material-icons-extended:1.6.0")
+
+    // Media3 (ExoPlayer) dependencies
+    implementation("androidx.media3:media3-exoplayer:1.5.1")
+    implementation("androidx.media3:media3-ui:1.5.1")
+
+    // ConstraintLayout for Compose
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
 
 
@@ -55,7 +83,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.constraintlayout.compose.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
