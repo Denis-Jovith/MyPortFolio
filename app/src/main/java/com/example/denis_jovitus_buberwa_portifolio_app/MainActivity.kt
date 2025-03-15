@@ -18,13 +18,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +40,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -67,16 +71,29 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import com.example.denis_jovitus_buberwa_portifolio_app.ui.theme.Denis_Jovitus_Buberwa_Portifolio_AppTheme
-
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             Denis_Jovitus_Buberwa_Portifolio_AppTheme {
+                val systemUiController = rememberSystemUiController()
+                val useDarkIcons = true // Set to false if using a dark theme
+
+                // Ensure the status bar remains visible with proper icon color
+                SideEffect {
+                    systemUiController.setSystemBarsColor(
+                        color = Color.Transparent, // Makes status bar transparent
+                        darkIcons = useDarkIcons
+                    )
+                }
+
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .windowInsetsPadding(WindowInsets.statusBars), // Adds status bar padding
                     color = MaterialTheme.colorScheme.background
                 ) {
                     MainScreen()
@@ -93,12 +110,12 @@ fun MainScreen() {
     val state = rememberScrollState()
     val state1 = rememberScrollState()
     val state2 = rememberScrollState()
-    LaunchedEffect(Unit) { state.animateScrollTo(100)}
+    LaunchedEffect(Unit) { state.animateScrollTo(100) }
     val constraint = myConstraintSet()
     val context = LocalContext.current
     val displayMetrics = context.resources.displayMetrics
 
-    //Height Of Screen
+    // Height Of Screen
     val height = LocalConfiguration.current.screenHeightDp.dp - 80.dp
 
     ConstraintLayout(
@@ -128,6 +145,7 @@ fun MainScreen() {
         }
     }
 }
+
 
 @Composable
 private fun Content(
@@ -201,10 +219,14 @@ private fun ContentBody(constraint: ConstraintSet, modifier: Modifier) {
                             ) {
                                 append("Hey, welcome! My name is Denis Buberwa, and I am a final-year Computer Science student.\n" +
                                         "I have a deep passion for cybersecurity, ethical hacking, and programming. " +
-                                        "I'm also interested in graphics design (Blender) and mobile & web development.\n" +
-                                        "In my projects, I use different programming languages, and I love building Android apps with Kotlin " +
-                                        "and React Native, as well as using Spring Boot for backend development and React for frontend Web.\n" +
+                                        "I'm also interested in graphics design (Blender) and mobile & web development.\n\n" +
+                                        "As a Full-Stack Developer, I specialize in Android development using Kotlin and Jetpack Compose, " +
+                                        "and web development with Kotlin, Ktor, and Kotlin Multiplatform. " +
+                                        "I also have a strong interest in cybersecurity.\n\n" +
+                                        "In my projects, I use different programming languages, and I love building Android apps with Kotlin. " +
                                         "Currently, I'm working on a Note App using Kotlin Multiplatform Mobile (KMM) with Clean Architecture.")
+
+
 
                             }
                         }
