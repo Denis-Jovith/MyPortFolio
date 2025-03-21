@@ -1,7 +1,7 @@
 # MyPortFolio
 
 Welcome to my portfolio repository! This project showcases my skills and projects as a **Full-Stack Developer**, specializing in **Android development** using **Kotlin** and **Jetpack Compose**, as well as **web development** with **Kotlin**, **Ktor**, and **Kotlin Multiplatform**.
-Download the application over here https://github.com/Denis-Jovith/MyPortFolio/releases/tag/v1.0.0
+Download the application over here https://github.com/Denis-Jovith/MyPortFolio/releases/download/v1.0.0/app-debug.apk
 
 ## About Me
 
